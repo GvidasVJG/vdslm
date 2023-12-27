@@ -1,6 +1,6 @@
-def readData():
+def readData(fname):
     words = ''
-    with open("data.txt", 'r') as learningData:
+    with open(fname, 'r') as learningData:
         words = learningData.read().lower()
     words = words.replace(',',' , ').replace('.', ' . ').replace('-',' - ').replace('–',' – ').replace('(',' ( ').replace(')',' ) ').replace('\n', ' \n ').split()
     while words.count(''):
@@ -54,10 +54,11 @@ def dumpTrainingData(probs, words):
     
     print('Done dumping training data\n')
 
-def train():
+def train(fname):
     print('Starting training\n')
-    words_list = readData()
+    words_list = readData(fname)
     counts = count_following_words(words_list)
     probs = countProbs(counts)
     dumpTrainingData(probs, words_list)
     print('Done training')
+    input("Press ENTER to exit")

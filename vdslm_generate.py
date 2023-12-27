@@ -1,3 +1,14 @@
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
 def levenshtein_distance(s1, s2):
     if len(s1) < len(s2):
         return levenshtein_distance(s2, s1)
@@ -63,7 +74,7 @@ def animate(leng):
     del frames_back[0]
     frames += frames_back
     # End of Fun animations
-    
+
     for c in cycle(frames):
         if done:
             break
@@ -73,7 +84,6 @@ def animate(leng):
 def generate(to_gen):
     import os
     from pickle import load
-    from termcolor import colored
 
     to_load = []
     probs = None
@@ -84,7 +94,7 @@ def generate(to_gen):
         probs = to_load[0]
         words_list = to_load[1]
     else:
-        print(f'{colored("Trained model not found.","red")} \nRun {colored("python ./vdslm.py -t", "magenta")} to train a model based on data.txt file')
+        print(f'{bcolors.FAIL}Trained model not found.{bcolors.ENDC}\nRun {bcolors.OKCYAN}python ./vdslm.py -t{bcolors.ENDC} to train a model based on data.txt file')
         print('Exiting...')
         exit()
 
@@ -95,7 +105,7 @@ def generate(to_gen):
     if currw not in probs:
         from threading import Thread
         inputw = currw
-        print(f'{colored("The word `{}` is not in the training data.".format(inputw),"yellow")}')
+        print(f'{bcolors.WARNING}The word `{inputw}` is not in the training data.{bcolors.ENDC}')
         print(f'Searching for the closest word in training data to the word `{inputw}`.')
         t = Thread(target=animate, args=(len(inputw),))
         t.start() 
@@ -124,3 +134,4 @@ def generate(to_gen):
         currw = nextw
 
     print('\n---')
+    input("Press ENTER to exit")
