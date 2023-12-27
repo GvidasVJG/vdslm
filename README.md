@@ -10,3 +10,12 @@ To train the model based on file ```filename``` (default is ```data.txt```) run 
 To generate run ```python3 ./vdslm.py -g [len]``` and provide an input word to generate a response of length ```len``` (default is 50). 
 
 ```vdslm_model.bin``` is a pre-trained model based on ```data.txt```
+
+# How it works
+When training the model the data is read and sparated based on spaces. 
+
+Then the successors of each word as well as their probabilities of appearing after the word are counted.
+
+This is used when generating the response. If the input word is not found in the training data of the model, the closest word using Levenshtein distance is found and used.
+
+The response is generated word-by-word using the last generated word as input.
